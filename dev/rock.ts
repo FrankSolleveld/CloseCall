@@ -1,7 +1,4 @@
-class Rock extends HTMLElement{
-    // Fields 
-    private x : number = 0
-    private y : number = 0
+class Rock extends GameObject {
 
     private speed           : number = 0
     private g               : number = 0 // gravity
@@ -10,16 +7,6 @@ class Rock extends HTMLElement{
 
     // Properties
     public set Speed(s  : number)   { this.speed = s }     
-
-	public get X()      : number    { return this.x    }
-	public set X(value  : number)   { this.x = value   }
-
-	public get Y()      : number    { return this.y    }
-	public set Y(value  : number)   { this.y = value   }
-
-
-    public get width()  : number    { return this.clientWidth }
-    public get height() : number    { return this.clientHeight }
 
     constructor(index) {
         super()

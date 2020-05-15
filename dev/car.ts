@@ -1,26 +1,15 @@
 /// <reference path="wheel.ts"/>
+/// <reference path="gameobject.ts" />
 
-class Car extends HTMLElement {
+class Car extends GameObject {
     // Fields
     private game    : Game
-    private x       : number    = 0
-    private y       : number    = 0
     private speed   : number    = Math.random() * 2 + 1
     private braking : boolean   = false
     private stopped : boolean   = false
 
     // Properties
     public get Speed()  : number    { return this.speed }
-
-	public get X()      : number    { return this.x    }
-	public set X(value  : number)   { this.x = value   }
-
-	public get Y()      : number    { return this.y    }
-	public set Y(value  : number)   { this.y = value   }
-
-
-    public get width()  : number    { return this.clientWidth }
-    public get height() : number    { return this.clientHeight }
 
     constructor(yIndex : number, game : Game) {
         super()
