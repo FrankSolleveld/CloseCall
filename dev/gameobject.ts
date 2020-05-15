@@ -16,12 +16,4 @@ class GameObject extends HTMLElement {
     constructor(){
         super()
     }
-
-    private hasCollision(rect1 : Car, rect2 : Rock) : boolean {
-        return (rect1.X < rect2.X + rect2.width &&
-                rect1.X + rect1.width > rect2.X &&
-                rect1.Y < rect2.Y + rect2.height &&
-                rect1.Y + rect1.height > rect2.Y)
-    }
-    
 }

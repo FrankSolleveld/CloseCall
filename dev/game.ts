@@ -32,12 +32,16 @@ class Game {
     }
 
     private checkCollision() {
-        for(let car of this.cars) {
-            for(let rock of this.rocks) {
-                if(this.hasCollision(car, rock)) {
-                    rock.crashed(car.Speed)
-                    car.crash()
-                    this.gameOver()
+        for(let car of this.gameObjects) {
+            if (car instanceof Car) {
+                for(let rock of this.gameObjects) {
+                    if (rock instanceof Rock){
+                        if(this.hasCollision(car, rock)) {
+                            rock.crashed(car.Speed)
+                            car.crash()
+                            this.gameOver()
+                        }
+                    }   
                 }
             }
         }
@@ -58,6 +62,13 @@ class Game {
 
     private draw() {
         document.getElementById("score").innerHTML = "Score : "+this.score
+    }
+
+    protected hasCollision(rect1 : Car, rect2 : Rock) : boolean {
+        return (rect1.X < rect2.X + rect2.width &&
+                rect1.X + rect1.width > rect2.X &&
+                rect1.Y < rect2.Y + rect2.height &&
+                rect1.Y + rect1.height > rect2.Y)
     }
 } 
 
