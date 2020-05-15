@@ -55,7 +55,7 @@ class Car extends GameObject {
             this.braking = false
             this.stopped = true
         }
-        this.draw()
+        super.draw()
     } 
 
     public crash() {
@@ -66,10 +66,6 @@ class Car extends GameObject {
 
     public changeColor(deg : number) : void {
         this.style.filter = `hue-rotate(${deg}deg)`
-    }
-
-    private draw() : void {
-        this.style.transform =`translate(${this.X}px,${this.Y}px)`
     }
 }
 

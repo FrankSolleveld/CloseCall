@@ -18,11 +18,8 @@ class GameObject extends HTMLElement {
     set Y(value) { this.y = value; }
     get width() { return this.clientWidth; }
     get height() { return this.clientHeight; }
-    hasCollision(rect1, rect2) {
-        return (rect1.X < rect2.X + rect2.width &&
-            rect1.X + rect1.width > rect2.X &&
-            rect1.Y < rect2.Y + rect2.height &&
-            rect1.Y + rect1.height > rect2.Y);
+    draw() {
+        this.style.transform = `translate(${this.X}px,${this.Y}px)`;
     }
 }
 class Car extends GameObject {
@@ -63,7 +60,7 @@ class Car extends GameObject {
             this.braking = false;
             this.stopped = true;
         }
-        this.draw();
+        super.draw();
     }
     crash() {
         this.speed = 0;
@@ -72,9 +69,6 @@ class Car extends GameObject {
     }
     changeColor(deg) {
         this.style.filter = `hue-rotate(${deg}deg)`;
-    }
-    draw() {
-        this.style.transform = `translate(${this.X}px,${this.Y}px)`;
     }
 }
 window.customElements.define("car-component", Car);
@@ -103,12 +97,16 @@ class Game {
         this.request = requestAnimationFrame(() => this.gameLoop());
     }
     checkCollision() {
-        for (let car of this.cars) {
-            for (let rock of this.rocks) {
-                if (this.hasCollision(car, rock)) {
-                    rock.crashed(car.Speed);
-                    car.crash();
-                    this.gameOver();
+        for (let car of this.gameObjects) {
+            if (car instanceof Car) {
+                for (let rock of this.gameObjects) {
+                    if (rock instanceof Rock) {
+                        if (this.hasCollision(car, rock)) {
+                            rock.crashed(car.Speed);
+                            car.crash();
+                            this.gameOver();
+                        }
+                    }
                 }
             }
         }
@@ -126,6 +124,12 @@ class Game {
     }
     draw() {
         document.getElementById("score").innerHTML = "Score : " + this.score;
+    }
+    hasCollision(rect1, rect2) {
+        return (rect1.X < rect2.X + rect2.width &&
+            rect1.X + rect1.width > rect2.X &&
+            rect1.Y < rect2.Y + rect2.height &&
+            rect1.Y + rect1.height > rect2.Y);
     }
 }
 window.addEventListener("load", () => new Game());
@@ -152,10 +156,7 @@ class Rock extends GameObject {
             this.g = 0;
             this.rotationSpeed = 0;
         }
-        this.draw();
-    }
-    draw() {
-        this.style.transform = `translate(${this.X}px,${this.Y}px)`;
+        super.draw();
     }
     crashed(carSpeed) {
         this.g = 9.81;

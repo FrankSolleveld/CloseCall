@@ -16,4 +16,8 @@ class GameObject extends HTMLElement {
     constructor(){
         super()
     }
+
+    protected draw() : void {
+        this.style.transform =`translate(${this.X}px,${this.Y}px)`
+    }
 }
